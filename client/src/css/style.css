@@ -20,6 +20,10 @@ h1 {
   font-size: 22px;
 }
 
+#buttonInstall{
+  visibility: hidden;
+}
+
 #navbar {
   height: var(--navbar-height);
   background-color: var(--primary);
