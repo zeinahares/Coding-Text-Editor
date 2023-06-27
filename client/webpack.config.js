@@ -24,7 +24,7 @@ module.exports = () => {
         template: './index.html',
         title: 'Jate'
       }),
-     
+
       // Injects our custom service worker
       new InjectManifest({
         swSrc: './src-sw.js',
@@ -53,27 +53,13 @@ module.exports = () => {
 
       new WorkboxPlugin.GenerateSW({
         clientsClaim: true,
-         skipWaiting: true,
-        //  runtimeCaching: [{
-          // Do not precache images
-          // exclude: [/\.(?:png|jpg|jpeg|svg)$/],
-          // Define runtime caching rules.
-          runtimeCaching: [{
-            // Match any request that ends with .png, .jpg, .jpeg or .svg.
-            urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
-            // Apply a cache-first strategy.
-            handler: 'CacheFirst',
-            options: {
-              // Use a custom cache name.
-              cacheName: 'asset-cache',
-              // Only cache 5 images.
-              expiration: {
-                maxEntries: 5,
-              },
-            },
-          }],
-        // }],
-      }),
+        skipWaiting: true,
+        runtimeCaching: [{
+          urlPattern: /\//,
+          handler: 'CacheFirst',
+        }],
+      })
+
     ],
 
     module: {
