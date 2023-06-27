@@ -65,7 +65,7 @@ module.exports = () => {
             handler: 'CacheFirst',
             options: {
               // Use a custom cache name.
-              cacheName: 'images',
+              cacheName: 'asset-cache',
               // Only cache 5 images.
               expiration: {
                 maxEntries: 5,

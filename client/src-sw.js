@@ -9,7 +9,7 @@ const { StaleWhileRevalidate } = require('workbox-strategies');
 precacheAndRoute(self.__WB_MANIFEST);
 
 const pageCache = new CacheFirst({
-  cacheName: 'page-cache',
+  cacheName: 'asset-cache',
   plugins: [
     new CacheableResponsePlugin({
       statuses: [0, 200],
@@ -25,7 +25,7 @@ warmStrategyCache({
   strategy: pageCache,
 });
 
-registerRoute(({ request }) => request.mode === 'navigate', pageCache);
+// registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
 // registerRoute();
