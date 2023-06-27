@@ -1,6 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
 // TODO: Add and configure workbox plugins for a service worker and manifest file.
@@ -49,6 +50,30 @@ module.exports = () => {
           },
         ],
       }),
+
+      new WorkboxPlugin.GenerateSW({
+        clientsClaim: true,
+         skipWaiting: true,
+        //  runtimeCaching: [{
+          // Do not precache images
+          // exclude: [/\.(?:png|jpg|jpeg|svg)$/],
+          // Define runtime caching rules.
+          runtimeCaching: [{
+            // Match any request that ends with .png, .jpg, .jpeg or .svg.
+            urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+            // Apply a cache-first strategy.
+            handler: 'CacheFirst',
+            options: {
+              // Use a custom cache name.
+              cacheName: 'images',
+              // Only cache 5 images.
+              expiration: {
+                maxEntries: 5,
+              },
+            },
+          }],
+        // }],
+      }),
     ],
 
     module: {
@@ -57,6 +82,10 @@ module.exports = () => {
         {
           test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
         },
         {
           test: /\.m?js$/,
